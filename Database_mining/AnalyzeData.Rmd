@@ -1,0 +1,76 @@
+---
+title: "Analytical Queries and report"
+author: "Madhavi Arvind Saraf"
+date: "20-04-2023"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+
+```{r connectMysql}
+if (!require("RMySQL")) install.packages("RMySQL")
+library(RMySQL)
+
+# 2. Settings
+db_user <- 'root'
+db_password <- 'root'
+db_name <- 'journaldw'
+db_host <- 'localhost'
+db_port <- 3306
+dbConnectionMysql <-  dbConnect(MySQL(), user = db_user, password = db_password,host = db_host, port = db_port)
+useDBqry <- paste0("USE ",db_name)
+dbExecute(dbConnectionMysql,useDBqry)
+
+```
+# Report
+## Top five journals with the most articles published in them between 1975 - 1979
+## Date : 20 April 2023
+```{r analyticalqry1}
+
+j_qry <- "SELECT jid as Journal_ID,jtitle as Journal_Title, year as Year, Article_count FROM journalfact jf inner join date_dim on date_dim.date_id = jf.date_id WHERE year BETWEEN 1975 AND 1979  ORDER BY Article_count DESC LIMIT 5"
+journals <- dbGetQuery(dbConnectionMysql,j_qry)
+View(journals)
+
+H <- journals$Article_count
+M <- journals$Journal_ID
+Y <- journals$Year
+
+# Plot the bar chart 
+barplot(H,names.arg=M,xlab="Journal ID",ylab="Number of Articles",main="Five Journals with most articles between 1975 - 1979",col = Y, legend.text = TRUE, args.legend = list(x = "topright",bty="n"),cex.lab = 1.2)
+
+legend("topright", legend = Y,col=Y,lwd=10)
+rmarkdown::paged_table(journals)
+
+```
+### Description :
+#### The above table and the bar chart gives the top five journals with most articles between the period 1975-1979.Visualization was chosen instead of tables as this seemed better approach in this use case as the data to be displayed is small and concise and is well understood when visualized. The table is also shown to show the mapping between journal Ids and journal titles.
+
+
+
+#  Report
+## Number of articles per journal per year broken down by quarter, where in each table represents one quarter
+## Date : 20 April 2023
+
+```{r analyticalQry2}
+j_qry1 <- "SELECT jid as Journal_ID,jtitle as Journal_Title, year as Year, Article_count,Quarter FROM journalfact jf inner join date_dim on date_dim.date_id = jf.date_id WHERE Quarter=1"
+quarter1_journals <- dbGetQuery(dbConnectionMysql,j_qry1)
+rmarkdown::paged_table(quarter1_journals)
+View(quarter1_journals)
+j_qry2 <- "SELECT jid as Journal_ID,jtitle as Journal_Title, year as Year, Article_count,Quarter FROM journalfact jf inner join date_dim on date_dim.date_id = jf.date_id WHERE Quarter=2"
+quarter2_journals <- dbGetQuery(dbConnectionMysql,j_qry2)
+rmarkdown::paged_table(quarter2_journals)
+View(quarter2_journals)
+j_qry3 <- "SELECT jid as Journal_ID,jtitle as Journal_Title, year as Year, Article_count,Quarter FROM journalfact jf inner join date_dim on date_dim.date_id = jf.date_id WHERE Quarter=3"
+quarter3_journals <- dbGetQuery(dbConnectionMysql,j_qry3)
+rmarkdown::paged_table(quarter3_journals)
+View(quarter3_journals)
+j_qry4 <- "SELECT jid as Journal_ID,jtitle as Journal_Title, year as Year, Article_count,Quarter FROM journalfact jf inner join date_dim on date_dim.date_id = jf.date_id WHERE Quarter=4"
+quarter4_journals <- dbGetQuery(dbConnectionMysql,j_qry4)
+rmarkdown::paged_table(quarter4_journals)
+View(quarter4_journals)
+```
+
+### Description:
+#### For this use case displaying data in table is better as there are huge number of records. Accomodating 10000 records in a single view by visualization is difficult. Hence we are using tables. It gives the number of articles per journal per quarter. First table gives information for first quarter, second table for 2nd quarter, third table for third quarter and fourth table for 4th quarter.
