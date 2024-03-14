@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT Publications (Article+)>
+<!ELEMENT Article (PubDetails)>
+<!ATTLIST Article PMID CDATA #REQUIRED>
+<!ELEMENT PubDetails (Journal, ArticleTitle, AuthorList?)>
+<!ELEMENT Journal (ISSN?, JournalIssue, Title, ISOAbbreviation)>
+<!ELEMENT ISSN (#PCDATA)>
+<!ATTLIST ISSN IssnType (Electronic | Print) #REQUIRED>
+<!ELEMENT JournalIssue ((Volume, Issue?, PubDate) | (Issue?, PubDate))>
+<!ELEMENT PubDate ((Year, ((Month, Day?) | Season)?) | MedlineDate)>
+<!ELEMENT Season (#PCDATA)>
+<!ELEMENT Volume (#PCDATA)>
+<!ELEMENT Issue (#PCDATA)>
+<!ELEMENT Day (#PCDATA)>
+<!ELEMENT Year (#PCDATA)>
+<!ELEMENT Month (#PCDATA)>
+<!ELEMENT MedlineDate (#PCDATA)>
+<!ATTLIST JournalIssue CitedMedium (Internet | Print) #REQUIRED>
+<!ELEMENT Title (#PCDATA)>
+<!ELEMENT ISOAbbreviation (#PCDATA)>
+<!ELEMENT ArticleTitle (#PCDATA)>
+<!ELEMENT AuthorList (Author+)>
+<!ATTLIST AuthorList CompleteYN CDATA #FIXED "Y">
+<!ELEMENT Author ((LastName, (ForeName, Initials, (AffiliationInfo | Suffix)?)?) | CollectiveName)>
+<!ATTLIST Author ValidYN (N | Y) #REQUIRED>
+<!ELEMENT ForeName (#PCDATA)>
+<!ELEMENT Initials (#PCDATA)>
+<!ELEMENT LastName (#PCDATA)>
+<!ELEMENT CollectiveName (#PCDATA)>
+<!ELEMENT AffiliationInfo (Affiliation)>
+<!ELEMENT Affiliation (#PCDATA)>
+<!ELEMENT Suffix (#PCDATA)>
+        
