@@ -1,7 +1,7 @@
 We have taken 200k news items from HuffPost. The dataset is taken from a Kaggle competition. The news articles in the dataset are each tagged with one of several categories (such as Politics, Technology,Entertainment, etc.). Each entry in the dataset typically includes the headline and a short description of the article, along
 with its assigned category. We have applied and compare various supervised machine learning models and deep learning to categorize news articles into predefined categories based on their headlines and short descriptions. This project enables understanding text classification nuances using traditional machine learning such as deep learning approaches.
 
-Major Packages used: sklearn, nltk
+Major Packages used: sklearn, nltk, pandas
 
 We have applied following Machine Learning models and analysed them:
 a) Logistic Regression: Use as a baseline model to understand the linear separability of text categories.
