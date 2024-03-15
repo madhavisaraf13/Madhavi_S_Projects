@@ -1,4 +1,5 @@
 In this project, we have accessed the 40,000 physician notes created medical aspirants. These notes, intended for ten standardized patients, form a distinctive dataset for examination. As the patients remain consistent across all note writers, the notes naturally cluster into ten groups. This project serves as an excellent illustration of unsupervised learning, wherein the known grouping of patients can be employed for subsequent analysis.
+
 Major Packages used: scikit-learn, umap
 
 This project involves the following major steps:
